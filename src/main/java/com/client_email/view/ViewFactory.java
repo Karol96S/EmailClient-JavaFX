@@ -4,6 +4,7 @@ import com.client_email.EmailManager;
 import com.client_email.controller.BaseController;
 import com.client_email.controller.LoginWindowController;
 import com.client_email.controller.MainWindowController;
+import com.client_email.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,27 @@ public class ViewFactory {
         this.emailManager = emailManager;
     }
 
+    //View options handling:
+    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+
+    public ColorTheme getColorTheme() {
+        return colorTheme;
+    }
+
+    public void setColorTheme(ColorTheme colorTheme) {
+        this.colorTheme = colorTheme;
+    }
+
+    public FontSize getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(FontSize fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    private FontSize fontSize = FontSize.MEDIUM;
+
     public void showLoginWindow() {
 
         System.out.println("show login window called");
@@ -33,6 +55,15 @@ public class ViewFactory {
         System.out.println("main window called");
 
         BaseController controller = new MainWindowController(emailManager, this, "/MainWindow.fxml");
+        initializeStage(controller);
+
+    }
+
+    public void showOptionsWindow() {
+
+        System.out.println("options window called");
+
+        BaseController controller = new OptionsWindowController(emailManager, this, "/OptionsWindow.fxml");
         initializeStage(controller);
 
     }

@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class LoginWindowController extends BaseController {
 
+    public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
+        super(emailManager, viewFactory, fxmlName);
+    }
+
     @FXML
     private TextField emailAdressField;
 
@@ -18,10 +22,6 @@ public class LoginWindowController extends BaseController {
 
     @FXML
     private PasswordField passwordField;
-
-    public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
-        super(emailManager, viewFactory, fxmlName);
-    }
 
     @FXML
     void loginButtonAction() {
