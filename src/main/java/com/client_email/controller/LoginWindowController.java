@@ -1,6 +1,8 @@
 package com.client_email.controller;
 
 import com.client_email.EmailManager;
+import com.client_email.controller.services.LoginService;
+import com.client_email.model.EmailAccount;
 import com.client_email.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,9 +28,35 @@ public class LoginWindowController extends BaseController {
     @FXML
     void loginButtonAction() {
         System.out.println("loginButtonAction");
-        viewFactory.showMainWindow();
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
-        viewFactory.closeStage(stage);
+        if (fieldsAreValid()) {
+            EmailAccount emailAccount = new EmailAccount(emailAdressField.getText(), passwordField.getText());
+            LoginService loginService = new LoginService(emailAccount, emailManager);
+            loginService.start();
+            loginService.setOnSucceeded(event -> {
+                EmailLoginResult emailLoginResult = loginService.getValue();
+                switch (emailLoginResult) {
+                    case SUCCESS:
+                        System.out.println("login succesfull!" + emailAccount);
+                        viewFactory.showLoginWindow();
+                        Stage stage = (Stage) errorLabel.getScene().getWindow();
+                        viewFactory.closeStage(stage);
+                        return;
+                }
+            });
+        }
+
+    }
+
+    private boolean fieldsAreValid() {
+        if (emailAdressField.getText().isEmpty()) {
+            errorLabel.setText("Please fill email");
+            return false;
+        }
+        if (passwordField.getText().isEmpty()) {
+            errorLabel.setText("Please fill the password");
+            return false;
+        }
+        return true;
     }
 
 }
