@@ -5,12 +5,16 @@ import com.client_email.controller.services.LoginService;
 import com.client_email.model.EmailAccount;
 import com.client_email.view.ViewFactory;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginWindowController extends BaseController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginWindowController extends BaseController implements Initializable {
 
     public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
@@ -37,9 +41,20 @@ public class LoginWindowController extends BaseController {
                 switch (emailLoginResult) {
                     case SUCCESS:
                         System.out.println("login succesfull!" + emailAccount);
-                        viewFactory.showLoginWindow();
+                        if (!viewFactory.isMainViewInitialized()) {
+                            viewFactory.showMainWindow();
+
+                        }
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
+                        return;
+                    case FAILED_BY_CREDENTIALS:
+                        errorLabel.setText("invalid credentials!");
+                        return;
+                    case FAILED_BY_UNEXPECTED_ERROR:
+                        errorLabel.setText("unexpected error!");
+                        return;
+                    default:
                         return;
                 }
             });
@@ -59,4 +74,9 @@ public class LoginWindowController extends BaseController {
         return true;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        emailAdressField.setText("emailclient96@op.pl");
+        passwordField.setText("G27maH89z");
+    }
 }
