@@ -1,10 +1,7 @@
 package com.client_email.view;
 
 import com.client_email.EmailManager;
-import com.client_email.controller.BaseController;
-import com.client_email.controller.LoginWindowController;
-import com.client_email.controller.MainWindowController;
-import com.client_email.controller.OptionsWindowController;
+import com.client_email.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -75,6 +72,15 @@ public class ViewFactory {
         System.out.println("options window called");
 
         BaseController controller = new OptionsWindowController(emailManager, this, "/OptionsWindow.fxml");
+        initializeStage(controller);
+
+    }
+
+    public void showComposeMessageWindow() {
+
+        System.out.println("composeMessage window called");
+
+        BaseController controller = new ComposedMessageController(emailManager, this, "/ComposeMessageWindow.fxml");
         initializeStage(controller);
 
     }
