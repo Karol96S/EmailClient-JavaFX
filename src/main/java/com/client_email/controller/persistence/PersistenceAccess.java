@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PersistenceAccess {
 
-    private String VALID_ACCOUNTS_LOCATION = System.getProperty("user.home") + File.separator + "validAccounts.ser";
+    private String VALID_ACCOUNTS_LOCATION = System.getProperty("/src") + "validAccounts.ser";
     private Encoder encoder = new Encoder();
 
     public List<ValidAccount> loadFromPersistence() {
